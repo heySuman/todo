@@ -1,55 +1,27 @@
-import "./App.css";
-import { FormEvent, useCallback, useState } from "react";
-import { auth } from "../firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { useState } from "react";
+import Login from "./pages/login";
+import MainComponent from "./pages/main";
+import ProtectedRoute from "./pages/protected-route";
+import Signup from "./pages/signup";
+
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-
-  const handleSubmit = useCallback(
-    async (e: FormEvent) => {
-      e.preventDefault();
-      await createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          console.log(user);
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(errorCode, errorMessage);
-        });
-    },
-    [email, password]
-  );
-
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="email"
-          name="email"
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
+    <BrowserRouter>
+      <Routes>
+        <Route
+          element={<Login setIsLoggedIn={setIsLoggedIn} />}
+          path="/login"
         />
-        <input
-          type="password"
-          placeholder="password"
-          name="password"
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-        />
+        <Route element={<Signup />} path="/signup" />
 
-        <button type="submit">Create</button>
-      </form>
-    </>
+        <Route element={<ProtectedRoute isLoggedIn={isLoggedIn} />}>
+          <Route element={<MainComponent />} path="/"></Route>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
