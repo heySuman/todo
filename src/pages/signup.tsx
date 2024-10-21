@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 export default function Signup() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>();
 
   const handleSubmit = useCallback(
     async (e: FormEvent) => {
@@ -19,6 +20,7 @@ export default function Signup() {
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
+          setError(error.code);
           console.log(errorCode, errorMessage);
         });
     },
@@ -47,7 +49,7 @@ export default function Signup() {
             setPassword(e.target.value);
           }}
         />
-
+        <p className="error-message">{error && error.split("/")[1]}</p>
         <button type="submit">Create</button>
         <Link to={"/login"}>Already have an account? Login here</Link>
       </form>
