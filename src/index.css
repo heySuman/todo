@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -23,7 +27,7 @@
   place-content: center;
 }
 
-input {
+.form-container input {
   max-width: 350px;
   width: 300px;
 
@@ -35,7 +39,7 @@ input {
   font-size: 1rem;
 }
 
-button {
+.form-container button {
   max-width: 350px;
   width: 300px;
   padding: 8px 12px;
@@ -49,7 +53,7 @@ button {
   color: #fff;
 }
 
-form {
+.form-container form {
   padding: 20px;
   margin: 0 auto;
 

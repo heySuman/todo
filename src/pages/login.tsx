@@ -3,7 +3,7 @@ import { FormEvent, useState } from "react";
 import { auth } from "../../firebase";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function Login({ setUser, user }) {
+export default function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>();
